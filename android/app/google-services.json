@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039742666367",
+    "project_id": "dominos-app-4e8a6",
+    "storage_bucket": "dominos-app-4e8a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039742666367:android:98b8178c43da5e21cee14a",
+        "android_client_info": {
+          "package_name": "com.example.assignment_product_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiWPF92fok9Kd0FZ29zTl2eShh9k5ykw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

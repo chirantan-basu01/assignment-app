@@ -16,9 +16,15 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: ScreenUtils().screenWidth(context) * 0.2,
-                child: Image.asset('assets/images/splash_screen.png'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: ScreenUtils().screenWidth(context) * 0.2,
+                    child: Image.asset('assets/images/splash_screen.png'),
+                  ),
+                  const Icon(Icons.logout),
+                ],
               ),
               const Divider(
                 thickness: 1.0,
