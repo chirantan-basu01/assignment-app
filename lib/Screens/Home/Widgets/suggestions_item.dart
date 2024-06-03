@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../Utils/Helper/app_colors.dart';
-import '../../../Utils/Helper/screen_utils.dart';
-
 class SuggestionsItem extends StatelessWidget {
-  final String image;
+  final String image_url;
   final String title;
   final void Function()? onTap;
   final dynamic price;
@@ -12,7 +9,7 @@ class SuggestionsItem extends StatelessWidget {
 
   const SuggestionsItem({
     super.key,
-    required this.image,
+    required this.image_url,
     required this.title,
     required this.price,
     required this.description,
@@ -34,7 +31,7 @@ class SuggestionsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.network(
-                    image,
+                    image_url,
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
@@ -44,15 +41,21 @@ class SuggestionsItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 10.0,),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         Text(
                           title,
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 10.0,),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         Text(
                           price,
-                          style: const TextStyle(fontSize: 16, color: Colors.green),
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.green),
                         ),
                       ],
                     ),

@@ -1,35 +1,36 @@
-class ProductDetails {
-  final String imageUrl;
+class ProductModel {
+  final String id;
+  final String image_url;
   final String title;
-  final double price;
+  final dynamic price;
   final String description;
 
-  ProductDetails({
-    required this.imageUrl,
+  ProductModel({
+    required this.id,
+    required this.image_url,
     required this.title,
     required this.price,
     required this.description,
   });
 
   // Optionally, you can add a factory method to create a ProductDetails object from a JSON map
-  factory ProductDetails.fromJson(Map<String, dynamic> json) {
-    return ProductDetails(
-      imageUrl: json['imageUrl'],
+  factory ProductModel.fromJson(Map<String, dynamic> json, String id) {
+    return ProductModel(
+      id: id,
+      image_url: json['image_url'],
       title: json['title'],
       price: json['price'],
       description: json['description'],
     );
   }
 
-  // Optionally, you can add a method to convert a ProductDetails object to a JSON map
-  Map<String, dynamic> toJson() {
-    return {
-      'imageUrl': imageUrl,
-      'title': title,
-      'price': price,
-      'description': description,
-    };
-  }
-
-
+// Optionally, you can add a method to convert a ProductDetails object to a JSON map
+// Map<String, dynamic> toJson() {
+//   return {
+//     'image_url': image_url,
+//     'title': title,
+//     'price': price,
+//     'description': description,
+//   };
+// }
 }
