@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:assignment_product_list/Screens/Auth/View/otp_screen.dart';
-import 'package:assignment_product_list/Screens/Home/View/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Utils/CommonWidget/common_button.dart';
 import '../../../Utils/CommonWidget/common_inputfield.dart';
-import '../../CommonWidgets/common_heading_text.dart';
 import '../../CommonWidgets/common_title_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     double containerWidth = screenSize.height;
+
+    TextEditingController phoneController = TextEditingController();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -40,19 +44,35 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 5),
               CommonTextFormField(
-                hintText: " Type your phone number",
+                controller: phoneController,
+                hintText: " Type your phone number with +91",
               ),
               const SizedBox(height: 20),
               CommonButton(
-                onClicked: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OtpScreen(),
-                    ),
+                onClicked: () async {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => OtpScreen(verificationid: '',),
+                  //   ),
+                  // );
+
+                  await _auth.verifyPhoneNumber(
+                    verificationCompleted: (PhoneAuthCredential credential) {},
+                    verificationFailed: (FirebaseAuthException ex) {},
+                    codeSent: (String verificationid, int? resendtoken) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OtpScreen(verificationid: verificationid,),
+                        ),
+                      );
+                    },
+                    codeAutoRetrievalTimeout: (String verificationId) {},
+                    phoneNumber: phoneController.text.toString(),
                   );
                 },
-                label: "Login ",
+                label: "Login",
                 buttonHeight: containerWidth * 0.06,
                 buttonWidth: containerWidth * 0.8,
                 fontSize: 20,
