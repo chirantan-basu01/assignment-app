@@ -14,21 +14,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<ProductModel>> _productsFuture;
-
-  Future<List<ProductModel>> fetchProducts() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('products').get();
-
-    return snapshot.docs.map((doc) {
-      return ProductModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
-    }).toList();
-  }
+  Future<List<ProductModel>>? _products;
 
   @override
   void initState() {
     super.initState();
-    _productsFuture = fetchProducts();
+    _products = getProducts();
+  }
+
+  Future<List<ProductModel>> getProducts() async {
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('product_details').get();
+
+    List<Future<ProductModel>> futures = snapshot.docs.map((doc) async {
+      return ProductModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+    }).toList();
+
+    return await Future.wait(futures);
   }
 
   @override
@@ -54,30 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 thickness: 1.0,
               ),
               Expanded(
-                // child: ListView.builder(
-                //   itemCount: 8,
-                //   itemBuilder: (context, index) {
-                //     return SuggestionsItem(
-                //       image:
-                //           "https://www.dominos.co.in/files/items/Margherit.jpg",
-                //       title: "MARGHERITA",
-                //       price: "Rs 100",
-                //       description:
-                //           "A hugely popular margherita, with a deliciously tangy single cheese topping",
-                //       onTap: () {
-                //         Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //             builder: (context) => const ProductDetails(),
-                //           ),
-                //         );
-                //       },
-                //     );
-                //   },
-                // ),
-
                 child: FutureBuilder<List<ProductModel>>(
-                  future: _productsFuture,
+                  future: _products,
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -93,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return SuggestionsItem(
                                 image_url: product.image_url,
                                 title: product.title,
-                                price: product.price,
+                                price: "Rs: ${product.price.toString()}",
                                 description: product.description,
                                 onTap: () {
                                   Navigator.push(

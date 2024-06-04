@@ -32,10 +32,19 @@ class ProductDetails extends StatelessWidget {
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8.0),
-              Text(
-                productModel.price,
-                style: const TextStyle(fontSize: 20, color: Colors.green),
+              Row(
+                children: [
+                  const Text(
+                    "Rs: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    productModel.price.toString(),
+                    style: const TextStyle(fontSize: 20, color: Colors.green),
+                  ),
+                ],
               ),
+
               const SizedBox(height: 16.0),
               Text(productModel.description),
             ],
