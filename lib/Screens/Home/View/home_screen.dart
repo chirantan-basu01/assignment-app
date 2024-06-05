@@ -2,6 +2,7 @@ import 'package:assignment_product_list/Screens/ProductDetails/View/product_deta
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../Services/firebase_provider.dart';
 import '../../../Utils/Helper/screen_utils.dart';
 import '../../Model/product_details.dart';
 import '../Widgets/suggestions_item.dart';
@@ -19,18 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _products = getProducts();
-  }
-
-  Future<List<ProductModel>> getProducts() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('product_details').get();
-
-    List<Future<ProductModel>> futures = snapshot.docs.map((doc) async {
-      return ProductModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
-    }).toList();
-
-    return await Future.wait(futures);
+    _products = FirebaseProvider.getProducts();
   }
 
   @override
