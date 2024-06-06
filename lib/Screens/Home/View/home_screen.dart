@@ -1,9 +1,10 @@
 import 'package:assignment_product_list/Screens/ProductDetails/View/product_details.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Services/firebase_provider.dart';
 import '../../../Utils/Helper/screen_utils.dart';
+import '../../Auth/View/login_page.dart';
 import '../../Model/product_details.dart';
 import '../Widgets/suggestions_item.dart';
 
@@ -39,7 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: ScreenUtils().screenWidth(context) * 0.2,
                     child: Image.asset('assets/images/splash_screen.png'),
                   ),
-                  const Icon(Icons.logout),
+                  GestureDetector(
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
+                      child: const Icon(Icons.logout)),
                 ],
               ),
               const Divider(
